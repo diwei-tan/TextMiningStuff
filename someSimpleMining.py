@@ -15,24 +15,24 @@ for dirpath, dirnames, files in os.walk('Root File Path'):
 if len(filePaths)==0:
     print('No matching files found.')
 else:
-    print(len(filePaths), ' file matches found. scanning all for <SERVER_INTERFACE> properties')
+    print(len(filePaths), ' file matches found. scanning all for <PATTERN> properties')
     contents = []
     for path in filePaths:
         f = open(path, "r")
         contents.append(f.read())
     if len(contents)==0:
-        print('No INTERFACE_SERVER found in all matching files.')
+        print('No PATTERN found in all matching files.')
     else:
         for content in contents:
-            results = re.findall(r'<SERVER_INTERFACE((.|\n)*?)(/>)', content)
+            results = re.findall(r'<PATTERN((.|\n)*?)(/>)', content)
             for tuplestring in results:
                 str = convertTuple(tuplestring)
-                instanceclass = re.search(r'CLASS=((.|\n)*?) ', str).group()
+                instanceclass = re.search(r'PATTERN=((.|\n)*?) ', str).group()
                 if instanceclass:
                     classarray = instanceclass.split('"')
                     instanceclass = classarray[1]
                     print(instanceclass)
-                instanceOp = re.search(r'OPERATION=((.|\n)*?) ', str).group()
+                instanceOp = re.search(r'PATTERN=((.|\n)*?) ', str).group()
                 if instanceOp:
                     oparray = instanceOp.split('"')
                     instanceOp = oparray[1]
